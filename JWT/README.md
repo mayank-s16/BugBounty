@@ -6,7 +6,7 @@ BurpSuite Extension: JWT Editor
 Works only for symmetric encryptuon algorithm (HS256)
 Tool Reference: 
 ```
-python jwt-cracker.py --token TOKEN --wordlist WORDLIST
+python jwt_cracker.py --token TOKEN --wordlist WORDLIST
 ```
 ## 4. JWK parameter Injection (Asymetric)
 Application does accept arbitrary injected JWK value and it works for  Asymmetric algorithm e.g. RS256. The JWT would be signed by equilvalent private key of the public key which we embedded in the JWT. Application would verify it from the public key again and provides us the access.
