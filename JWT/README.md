@@ -1,6 +1,6 @@
-## JWT Test Cases
+# JWT Test Cases
 BurpSuite Extension: JWT Editor
-### (i). Lack of Signature Verification
+## (i). Lack of Signature Verification
 ### (ii). None Algorithm
 ### (iii). Weak Signing Key Bruteforcing
 Works only for symmetric encryptuon algorithm (HS256)
