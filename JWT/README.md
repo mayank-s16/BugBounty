@@ -34,7 +34,7 @@ Change the kid parameter as below in JWT and sign it.
 ```
 "kid": "../../../../../../dev/null"
 ```
-## Algorithm Confusion
+## 7. Algorithm Confusion
 Symmetric: One Key is used for signing and verification of token
 Asymmetric: Private key is used for signing the token and public used for verification
 This attack arises in case algorithm is asymmetric such as RSA(RS256). We will modify it to symmetric algorithm and will be using public key for signing and verification purpose.
