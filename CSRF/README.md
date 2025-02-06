@@ -9,7 +9,7 @@ Usually this type of implementation checks whether the cookie value is equal to 
 Try inserting cookies in user's browser using vulnerability such as HTTP Header Injection to bypass such kind of implementation.
 ## 7. CSRF where Referer validation depends on header being present
 Delete the Referer header entirely and observe that the request is  getting accepted or not. Include the below while creating CSRF PoC using Burp. It would prevent sending Referer header in the request.
-```
+```bash
 meta name="referer" content="never"
 ```
 ## 8. CSRF with Broken Referer Validation
