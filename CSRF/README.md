@@ -1,5 +1,5 @@
 # CSRF Test Cases
-## 1. No CSRF TOken
+## 1. No CSRF Token
 ## 2. Empty CSRF Token
 ## 3. Accepting Random CSRF Token
 ## 4. CSRF token validation depeneds on request method
