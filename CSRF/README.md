@@ -14,7 +14,7 @@ meta name="referer" content="never"
 ```
 ## 8. CSRF with Broken Referer Validation
 Include the below code in your PoC to check if Refere header can be bypassed. Remember to set Referrer:unsafe-url on attacker server.
-```
+```bash
 history.pushstate("","","/?[Whitelisted_Domain]")
 ```
 ## 9. Same Site Lax Bypass via Method Override
