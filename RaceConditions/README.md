@@ -1,6 +1,8 @@
 # Race Conditions
 ## 1. Limit Overrun Race Conditions
-### (i). Using promo code multiple times or redemming a gift card multiple times**: Send the request that is applying coupon code to the repeater. Add it in a group. Duplicate it 20 times and send it send the requests parallely.<br>
+### (i). Using promo code multiple times or redemming a gift card multiple times
+Send the request that is applying coupon code to the repeater.<br>
+Add it in a group. Duplicate it 20 times and send it send the requests parallely.
 ### (ii). Bypassing Bruteforce Protection
 Send the login request to repeater and take this into turbo intruder.<br>
 Copy all the passwords for which you want to include the request.<br>
