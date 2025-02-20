@@ -1,9 +1,7 @@
 # Race Conditions
 ## 1. Limit Overrun Race Conditions
-###(i). Using promo code multiple times or redemming a gift card multiple times**: Send the request that is applying coupon code to the repeater. Add it in a group. Duplicate it 20 times and send it send the requests parallely.<br>
-**(ii). Rating/Likes multiple times**<br>
-**(iii). Reusing single captcha multiple times**<br>
-###(iv). Bypassing Bruteforce Protection
+### (i). Using promo code multiple times or redemming a gift card multiple times**: Send the request that is applying coupon code to the repeater. Add it in a group. Duplicate it 20 times and send it send the requests parallely.<br>
+### (ii). Bypassing Bruteforce Protection
 Send the login request to repeater and take this into turbo intruder.<br>
 Copy all the passwords for which you want to include the request.<br>
 In the requestm change password=VALUE to password=%s<br>
@@ -35,7 +33,7 @@ def handleResponse(req, interesting):
     table.add(req)
 ```
 Changed Script:
-```
+```python
 def queueRequests(target, wordlists):
 
     # if the target supports HTTP/2, use engine=Engine.BURP2 to trigger the single-packet attack
@@ -60,5 +58,6 @@ def handleResponse(req, interesting):
     table.add(req)
 ```
 Click on Attack.
-
+### (ii). Rating/Likes multiple times
+### (iv). Reusing single captcha multiple times
 
