@@ -60,6 +60,6 @@ def handleResponse(req, interesting):
     table.add(req)
 ```
 Click on Attack.
-### (ii). Rating/Likes multiple times
+### (iii). Rating/Likes multiple times
 ### (iv). Reusing single captcha multiple times
 
