@@ -9,7 +9,7 @@ Copy all the passwords for which you want to include the request.<br>
 In the requestm change password=VALUE to password=%s<br>
 Change the script to examples/race-single-packet-attack.py<br>
 Copy the passwords so that it can be in the clipboard.
-Original Script:
+#### Original Script:
 ```python
 def queueRequests(target, wordlists):
 
@@ -34,7 +34,7 @@ def queueRequests(target, wordlists):
 def handleResponse(req, interesting):
     table.add(req)
 ```
-Changed Script:
+#### Changed Script:
 ```python
 def queueRequests(target, wordlists):
 
