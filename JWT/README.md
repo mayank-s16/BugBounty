@@ -3,8 +3,8 @@ BurpSuite Extension: JWT Editor
 ## 1. Lack of Signature Verification
 ## 2. None Algorithm
 ## 3. Weak Signing Key Bruteforcing (Symmetric)
-Works only for symmetric encryptuon algorithm (HS256)<br>
-*Tool Reference:* 
+Works only for symmetric encryption algorithm (HS256)<br>
+*Tool Reference: https://github.com/mayank-s16/BugBounty/blob/main/JWT/jwt_cracker.py*
 ```bash
 python jwt_cracker.py --token TOKEN --wordlist WORDLIST
 ```
@@ -15,9 +15,9 @@ python jwt_cracker.py --token TOKEN --wordlist WORDLIST
 * Generate RSA key using JWT Editor Extension and select Attack > Embedded JWK.
 ## 5. JKU parameter Injection (Asymmetric)
 ### Setting up Attacker Server
-From where the key would be fetched, we can include our own hosted keys.<br>
-Generate RSA Key copy public key as JWK.<br>
-Add public key to the attacker server.<br>
+* From where the key would be fetched, we can include our own hosted keys.
+* Generate RSA Key copy public key as JWK.
+* Add public key to the attacker server.<br>
 Attacker Server file:
 ```javascript
 {
