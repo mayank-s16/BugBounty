@@ -44,14 +44,14 @@ Change algorithm as
 ```
 "alg": "HS256"
 ```
-We know that the verification is being done via Public Key in the backend so we will now sign the token using public key. But how do we find the public key? It is meant to be public and sometimes expose via common endpoints such as jwks.json in root directory. Just browse it directly from the browser.
+We know that the verification is being done via Public Key in the backend so we will now sign the token using public key. But how do we find the public key? It is meant to be public and sometimes expose via common endpoints such as jwks.json in root directory. Just browse it directly from the browser.<br>
 Copy
 ```
 {"kty":....}
 ```
-In JWT Editor Extension > Generate New RSA key
-Paste the value copied earlier in key area.
-Right click > Copy the Public Key as PEM.
-Encode this in base64 format.
-Copy the encoded value, in JWT Editor Extension Generate a new Symmetric Key > Generate and replace k parameter with our copied value.
+In JWT Editor Extension > Generate New RSA key<br>
+Paste the value copied earlier in key area.<br>
+Right click > Copy the Public Key as PEM.<br>
+Encode this in base64 format.<br>
+Copy the encoded value, in JWT Editor Extension Generate a new Symmetric Key > Generate and replace k parameter with our copied value.<br>
 Go back to repeater > Sign the token and send the request.
