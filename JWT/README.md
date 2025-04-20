@@ -13,9 +13,9 @@ Application does accept arbitrary injected JWK value and it works for  Asymmetri
 Generate RSA key using JWT Editor Extension and select Attack > Embedded JWK.
 ## 5. JKU parameter Injection (Asymmetric)
 ### Setting up Attacker Server
-From where the key would be fetched, we can include our own hosted keys.\n
-Generate RSA Key copy public key as JWK.\n
-Add public key to the attacker server.\n
+From where the key would be fetched, we can include our own hosted keys.<br>
+Generate RSA Key copy public key as JWK.<br>
+Add public key to the attacker server.<br>
 Attacker Server file:
 ```
 {
@@ -23,22 +23,22 @@ Attacker Server file:
 }
 ```
 ### Modifying JWT
-Change the kid of the key to the newly generated kid value which we just pasted on attacker's server.\n
+Change the kid of the key to the newly generated kid value which we just pasted on attacker's server.<br>
 Add jku parameter as
 ```
 "jku": "https://example.com/keys"
 ```
 Now Sign the token using the key and change the payload part accordingly.
 ## 6. kid path traversal (Symmetric algorithm)
-Generate a Symmetric key and change k value as AA==
+Generate a Symmetric key and change k value as AA==<br>
 Change the kid parameter as below in JWT and sign it.
 ```
 "kid": "../../../../../../dev/null"
 ```
 ## 7. Algorithm Confusion
-Symmetric: One Key is used for signing and verification of token
-Asymmetric: Private key is used for signing the token and public used for verification
-This attack arises in case algorithm is asymmetric such as RSA(RS256). We will modify it to symmetric algorithm and will be using public key for signing and verification purpose.
+Symmetric: One Key is used for signing and verification of token<br>
+Asymmetric: Private key is used for signing the token and public used for verification<br>
+This attack arises in case algorithm is asymmetric such as RSA(RS256). We will modify it to symmetric algorithm and will be using public key for signing and verification purpose.<br>
 Change the payload part and endpoint.
 Change algorithm as
 ```
