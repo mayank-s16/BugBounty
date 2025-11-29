@@ -81,7 +81,7 @@ Te: trailers
 ````
 * Drop the above request and send this request to victim.
 * Once victim clicks on the link his account would be linked with your gmail account and you can access his account via OAuth login.
-## 4. Account Hijacking via redirect_uri
+## 4. Account Hijacking via redirect_uri [Grant type: Authorization Code]
 In this attack, we will steal the `code` value that is provided by OAuth server after successfull authentication. The steps to reproduce are:
 * Login with your social media account in the application and provide the consent. Below are the two requests you will notice.
 Request 1 (Initial request while we click on login via google or something):
