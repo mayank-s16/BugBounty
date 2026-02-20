@@ -1,6 +1,6 @@
 ## WebSocket Test Cases
 ### Cross-site WebSocket hijacking
-Chat feature completly relies on websocket. After switching protocol response, the first automatic request sent from the client to initiate chat is 'HELLO' and in return we get back the history of the chat.
+Chat feature completly relies on websocket. After switching protocol response, the first automatic request sent from the client to initiate chat is 'READY' and in return we get back the history of the chat.
 Let's host a malicious file on attacker's server.
 ```
 <script>
