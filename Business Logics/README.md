@@ -23,7 +23,7 @@ Admin interface only available if logged in as a DontWannaCry user
 * Update the email to test@Dontwannacry[.]com since the accounts with this domain would have admin privs.
 * Didnt require any email verification,
 Now we can access /admin page.
-### Flawed enforcement of business rules
+### Flawed enforcement of business rules [Price manipulation by abusing coupon code]
 Discount coupon can be applied this time. Below are the test cases we performed
 * Can same coupon be applied multiple times? Didn't work
 * Can multiple different coupons applied? Yes (but it is not a vulnerability)
