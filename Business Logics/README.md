@@ -28,4 +28,13 @@ Discount coupon can be applied this time. Below are the test cases we performed
 * Can same coupon be applied multiple times? Didn't work
 * Can multiple different coupons applied? Yes (but it is not a vulnerability)
 * Using repeater, Apply coupon1 first, then apply coupon 2, then apply coupon 1 and continues since the app was checking the last coupon applied to check for duplicate coupons. Refresh on UI and see the price changes.
-
+### Low-level logic flaw
+This time we need to add enough items in cart that would exceed the integer or float value of price so that it loops and becomes negative.
+Since the negative number is not accepted by the application, loop back until it becomes and settle down the price by including other item between 1 and 100$ since 100$ is the max money you have and the items cost more than 100. The steps to reproduce are given below.
+* In Burp Repeater while adding item to cart, notice that you can only add a 2-digit quantity with each request. Quantity parameter was also there in the rquest. Send the request to Burp Intruder.
+* Go to Intruder and set the quantity parameter to 99.
+* In the Payloads side panel, select the payload type Null payloads. Under Payload configuration, select Continue indefinitely. Send max request 1 by configuring the resource pool. Start the attack.
+* While the attack is running, go to your cart. Keep refreshing the page every so often and monitor the total price. Eventually, notice that the price suddenly switches to a large negative integer and starts counting up towards 0.
+* In the next few steps, we'll try to add enough units so that the price loops back around and settles between $0 and the $100 of your remaining store credit. This is not mathematically possible using only the leather jacket. Add leather jacket by doing some maths like TOTAL_PRICE/ITEM_PRICE. This would be the number of items you should to become it 0. You should do -1 from it to be safe. Because 0 is also not acceptable.
+* Now add another item of different price to keep the price in 0 to 100 and then buy it.
+ 
