@@ -37,4 +37,14 @@ Since the negative number is not accepted by the application, loop back until it
 * While the attack is running, go to your cart. Keep refreshing the page every so often and monitor the total price. Eventually, notice that the price suddenly switches to a large negative integer and starts counting up towards 0.
 * In the next few steps, we'll try to add enough units so that the price loops back around and settles between $0 and the $100 of your remaining store credit. This is not mathematically possible using only the leather jacket. Add leather jacket by doing some maths like TOTAL_PRICE/ITEM_PRICE. This would be the number of items you should to become it 0. You should do -1 from it to be safe. Because 0 is also not acceptable.
 * Now add another item of different price to keep the price in 0 to 100 and then buy it.
- 
+ ### Inconsistent handling of exceptional input during registration process
+ * Try to browse to /admin. Although you don't have access, an error message indicates that DontWannaCry users do
+ * Go to the account registration page. We need to register with DontWannaCry domain somehow but it requires activation of account using the link sent on email and we dont have access to mailbox.
+ * Try register with an exceptionally long email address in the format: very-long-string@.web-security-academy.net as you have access to mailbox of web-security-academy.net Complete the registration process by activating the account and login using this account
+ * Log in and go to the "My account" page. Notice that your email address has been truncated to 255 characters.
+ * Register a new account with another long email address, but this time include dontwannacry.com as a subdomain in your email address as follows:
+  ```
+   very-long-string@dontwannacry.com.YOUR-EMAIL-ID.web-security-academy.net
+  ```
+* Make sure that the very-long-string is the right number of characters so that the "m" at the end of @dontwannacry.com is character 255 exactly.
+* Activate this account by clicking on activation link sent on email and log in to your new account and notice that you now have access to the admin panel
