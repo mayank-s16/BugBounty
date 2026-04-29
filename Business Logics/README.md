@@ -47,4 +47,12 @@ Since the negative number is not accepted by the application, loop back until it
    very-long-string@dontwannacry.com.YOUR-EMAIL-ID.web-security-academy.net
   ```
 * Make sure that the very-long-string is the right number of characters so that the "m" at the end of @dontwannacry.com is character 255 exactly.
-* Activate this account by clicking on activation link sent on email and log in to your new account and notice that you now have access to the admin panel
+* Activate this account by clicking on activation link sent on email and log in to your new account and notice that you now have access to the admin panel.
+
+### Weak Isolation on dual use endpoint
+We do have change password functionality post login which requires current password too. While intercpeting this request. Below are the params we could see.
+* currentPassword
+* newPassword
+* username
+You can change the username to administrator and remove current password parameter to set the password of administrator user directly. This was the flaw.
+
