@@ -54,5 +54,13 @@ We do have change password functionality post login which requires current passw
 * currentPassword
 * newPassword
 * username
+
 You can change the username to administrator and remove current password parameter to set the password of administrator user directly. This was the flaw.
+### Insufficient workflow validation
+* We want to buy an item but we do have 100$ only. Item cost is more than 100.
+* Add the item to cart which is below 100$
+* Checkout it and notice at the end the request would get triggred which is like this: /cart/order-confirmed=true
+* Now add the item which is more than 100$
+* Trigger /cart/order-confirmed=true directly and notice that you got it free of cost.
+
 
