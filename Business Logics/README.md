@@ -62,5 +62,6 @@ You can change the username to administrator and remove current password paramet
 * Checkout it and notice at the end the request would get triggred which is like this: /cart/order-confirmed=true
 * Now add the item which is more than 100$
 * Trigger /cart/order-confirmed=true directly and notice that you got it free of cost.
-
-
+### Authentication bypass via flawed state machine
+Once we login into the application, it presents us the /role-selector page in which we can select by which role we want to login into the application. However admin role is not there in the list. We tried changing it in the request on the go, it didn't work.<br>
+Tip: If you have these kind of applications where you can select which role you want to login, if the /role-selector endpoint doesn't get called then app default to first role which could be admin. So login into the application and drop the /role-selector request. Now come to browser and browse https://[hostnme]/admin Yeah!! we are admin now.
