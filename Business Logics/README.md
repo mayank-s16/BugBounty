@@ -65,3 +65,11 @@ You can change the username to administrator and remove current password paramet
 ### Authentication bypass via flawed state machine
 Once we login into the application, it presents us the /role-selector page in which we can select by which role we want to login into the application. However admin role is not there in the list. We tried changing it in the request on the go, it didn't work.<br>
 Tip: If you have these kind of applications where you can select which role you want to login, if the /role-selector endpoint doesn't get called then app default to first role which could be admin. So login into the application and drop the /role-selector request. Now come to browser and browse https://[hostnme]/admin Yeah!! we are admin now.
+### Infinite money logic flaw
+* Application was giving a coupon code while signing up that can be used to buy $10 gift card in $7.
+* This coupon card can be applied on gift card
+* Coupon code can be used multiple times
+* So one can buy $10 value coupon code in $7 as many number of times.
+* Suppose you have 100$ in vault then you buy the 10$ gift card in 7$. Now your total balance would be 103$.
+* We did use BurpSuite Macro to solve this problem.
+
