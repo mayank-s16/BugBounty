@@ -1,0 +1,2 @@
+### Basic password reset poisoning
+Observe that you can change the Host header to an arbitrary value and still successfully trigger a password reset. Set Host header to the attacker server address and change the email to victim's email. The email would be triggered to victim's user with password reset link with host as attacker address. Once the victim clicks on the link attacker gets to know about the password reset token through wehich can reset the password of user.
