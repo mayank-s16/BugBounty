@@ -18,3 +18,9 @@ Host: YOUR-EXPLOIT-SERVER-ID.exploit-server.net
 ```
 * Send the request a couple of times until you get a cache hit with your exploit server URL reflected in the response. To simulate the victim, request the page in the browser using the same cache buster in the URL. Make sure that the alert() fires.
 * To produce the real impact, In Burp Repeater, remove any cache busters and keep replaying the request until you have re-poisoned the cache. When the victim visits the home page, it would execute the your payload.
+### 4. Routing-based SSRF
+Objective: Access the internal admin panel located in the 192.168.0.0/24 range, then delete the user carlos.
+* Send the GET / request that received a 200 response to Burp Repeater.
+* Set Host header value to Burp Collaborator, repeat the request and notice that you recieve a HTTP request.
+* Send this request to intruder and set the host header value as Host: 192.168.0.§0§ and bruteforce it from 0 to 255
+* You will notice 302 in one request, redirecting you to /admin, use that request to delete carlos user.
