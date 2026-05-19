@@ -66,4 +66,13 @@ Accept-Encoding: gzip, deflate, br
 Accept-Language: en-GB,en-US;q=0.9,en;q=0.8
 Priority: u=0, i
 ```
-Admin portal opened.
+Admin portal opened. Open response in browser and then enter the username to delete, intercept this request. Send to repeater, change the host header accordingly again.
+### Host validation bypass via connection state attack
+**Objective**: . Although the front-end server may initially appear to perform robust validation of the Host header, it makes assumptions about all requests on a connection based on the first request it receives. Exploit this behavior to access an internal admin panel located at 192.168.0.1/admin, then delete the user carlos.
+* Send the root URL request to repeater. Change the host header to some other header and notice that it will block you. Assume you have tried all the above test cases and nothing worked.
+* Repeat this request once again, create a group with name as "Test". Add both the request in that group.
+* Keep the first request as it is. In second request change the host header accordingly.
+* Send the request sequentially in single connection and notice that this time in second request we get 200 OK.
+* Show response in browser for second request.
+* Click on Delete user and intercept the reques, change the host header accordingly. Add the this tab to group.
+
