@@ -26,7 +26,7 @@ Use the below one to solve the lab.
 <iframe src="https://YOUR-LAB-ID.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=print()>','*')">
 ```
 When the iframe loads, the postMessage() method sends a web message to the home page. The event listener, which is intended to serve ads, takes the content of the web message and inserts it into the div with the ID ads.
-###  DOM XSS using web messages and a JavaScript URL
+###  2. DOM XSS using web messages and a JavaScript URL
 **Objective**: This lab demonstrates a DOM-based redirection vulnerability that is triggered by web messaging. To solve this lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function.<br>
 Below is the snippet code we found in application home page while trying to view using View Page source.
 ```html
