@@ -15,14 +15,14 @@ Below is the snippet code we found in application home page while trying to view
 1. The message event listener triggers whenever any script on any webpage sends a message to your window using postMessage(). Because the code doesn't check e.origin to verify who sent the message, an attacker can host a malicious website, open your site in an iframe (or a popup), and blast harmful data straight into your listener.
 2.  The code uses .innerHTML to insert e.data directly into the webpage. innerHTML doesn't just render text; it parses and executes HTML and JavaScript.<br>
 Host the below script on attacker server to have XSS.
-```
+```html
 // The attacker opens your vulnerable site
 const targetWindow = window.open("https://your-vulnerable-site.com");
 // The attacker sends a malicious payload disguised as data
 targetWindow.postMessage("<img src=x onerror=alert('Hacked!')>", "*");
 ```
 Use the below one to solve the lab.
-```
+```html
 <iframe src="https://YOUR-LAB-ID.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=print()>','*')">
 ```
 When the iframe loads, the postMessage() method sends a web message to the home page. The event listener, which is intended to serve ads, takes the content of the web message and inserts it into the div with the ID ads.
