@@ -4,7 +4,7 @@ Overall below are the test cases you need to apply when it comes to CORS vulnera
 3. Change Origin header value  to one that begins with the origin of the site
 4. Change Origin header value to one that ends with the origin of the site (Subdomain of the site should have XSS vulnerability)
 
-### CORS vulnerability with basic origin reflection
+### 1. CORS vulnerability with basic origin reflection
 /accountDetails API in response giving the below header.
 ```
 Access-Control-Allow-Credentials: true
@@ -30,7 +30,7 @@ cors.html
 </script>
 ```
 Above PoC you need to deliver to victim, once victim clicks on opens the PoC then his account specific details would come in attacker's logs. Dont forget to change HOSTNAME and endpoint value. In our case ENDPOINT should be /accountDetails.
-### CORS vulnerability with trusted null origin
+### 2. CORS vulnerability with trusted null origin
 * Review the history and observe that your key is retrieved via an AJAX request to /accountDetails, and the response contains the Access-Control-Allow-Credentials header suggesting that it may support CORS.
 * Send the request to Burp Repeater, and resubmit it with the added header Origin: null.
 * Observe that the "null" origin is reflected in the Access-Control-Allow-Origin header.
@@ -47,7 +47,7 @@ HTML poc:
     };
 </script>"></iframe>
 ```
-### CORS vulnerability with trusted insecure protocols
+### 3. CORS vulnerability with trusted insecure protocols
 We have tried all the test cases of CORS mentioned at start and found out that this website has an insecure CORS configuration in that it trusts all subdomains regardless of the protocol.
 Also have found XSS on one of the subdomains it trusts. With the help of this XSS vulnerability we can exploit CORS vulnerability on the main site. In subdomain a parameter productID was vulnerable to XSS as shown below.
 ```
