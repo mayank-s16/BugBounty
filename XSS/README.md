@@ -31,6 +31,6 @@ if (query) {
 	trackSearch(query);
 }
 ```
-Nice, means we can use the below payload to execute XSS. In the above js code query parameter would be replaced by user's input. So the final payload would be.<br>
+Nice, means we can use the below payload to execute XSS. In the above js code query parameter would be replaced by user's input. So the final payload would be according to the reflection in DOM (Inspect Element).<br>
 **Payload**: "><script>alert()</script>
 
