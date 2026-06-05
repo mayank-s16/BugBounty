@@ -12,7 +12,7 @@ Reflection Point is given below.
 <p>11111</p>
 ```
 **Payload Used:** <script>alert()</script>
-3. DOM XSS in document.write sink using source location.search
+### 3. DOM XSS in document.write sink using source location.search
 **Vulnerable Parameter/Location:** Search field<br>
 User's input is getting reflected back in DOM at two places as given below.
 ```html
