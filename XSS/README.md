@@ -21,7 +21,7 @@ User's input is getting reflected back in DOM at two places as given below.
 ```html
 <img src="/resources/images/tracker.gif?searchTerms=111111">
 ```
-First reflection point is also visible when we view Source code, but the second one is not visible in source code. The second one is visible only via Inspect Element. Means for second we can try DOM based XSS. Lets view the source code to check for any vulnerable javascript that might be generating the link in second reflection point
+First reflection point is also visible when we view Source code, but the second one is not visible in source code. Because this does not exist in source code, the server didn't send it. Instead, a client-side JavaScript file grabbed your input (from a Source like location.search, location.hash, or document.referrer) and dynamically wrote it into the page (into a Sink) after the initial page loaded. Lets view the source code again to check for any vulnerable javascript that might be generating the link in second reflection point
 ```js
 function trackSearch(query) {
 	document.write('<img src="/resources/images/tracker.gif?searchTerms=' + query + '">');
