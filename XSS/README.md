@@ -33,4 +33,22 @@ if (query) {
 ```
 Nice, means we can use the below payload to execute XSS. In the above js code query parameter would be replaced by user's input. So the final payload would be according to the reflection in DOM (Inspect Element).<br>
 **Payload**: "><script>alert()</script>
-
+### 4. DOM XSS in innerHTML sink using source location.search
+**Objective**: To find out DOM-based cross-site scripting vulnerability in the search blog functionality. It uses an innerHTML assignment, which changes the HTML contents of a div element, using data from location.search.<br>
+**Vulnerable Parameter/Location:** Search field<br>
+User's input is getting reflected back in DOM(inspect elekment) as given below.
+```html
+<span id="searchMessage">123456</span>
+```
+Lets if there is any javascript code using View Source that is setting this searchMessage. Found the below javascript code.
+```js
+ < script >
+ 	function doSearchQuery(query) {
+ 		document.getElementById('searchMessage').innerHTML = query;
+ 	}
+ var query = (new URLSearchParams(window.location.search)).get('search');
+ if (query) {
+ 	doSearchQuery(query);
+```
+According to the reflection point as the user's input is getting reflected back in span tag we can use the below payload to trigger XSS.<br>
+**Payload**: <img src=x onerror=alert()>
