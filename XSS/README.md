@@ -51,4 +51,6 @@ Lets if there is any javascript code using View Source that is setting this sear
  	doSearchQuery(query);
 ```
 According to the reflection point as the user's input is getting reflected back in span tag we can use the below payload to trigger XSS.<br>
+#### Why <script> Fails in innerHTML?
+When JavaScript dynamically inserts content using innerHTML, the browser handles it differently. According to the W3C and HTML5 standards, if the string being inserted contains a <script> tag, the browser will still parse it and add it to the DOM tree, but it marks it as unexecutable. Hence the payload would be.
 **Payload**: \<img src=x onerror=alert()>
