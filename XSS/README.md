@@ -51,4 +51,4 @@ Lets if there is any javascript code using View Source that is setting this sear
  	doSearchQuery(query);
 ```
 According to the reflection point as the user's input is getting reflected back in span tag we can use the below payload to trigger XSS.<br>
-**Payload**: <img src=x onerror=alert()>
+**Payload**: \<img src=x onerror=alert()>
