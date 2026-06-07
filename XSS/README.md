@@ -52,5 +52,9 @@ Lets if there is any javascript code using View Source that is setting this sear
 ```
 According to the reflection point as the user's input is getting reflected back in span tag we can use the below payload to trigger XSS.<br>
 #### Why <script> Fails in innerHTML?
-When JavaScript dynamically inserts content using innerHTML, the browser handles it differently. According to the W3C and HTML5 standards, if the string being inserted contains a <script> tag, the browser will still parse it and add it to the DOM tree, but it marks it as unexecutable. Hence the payload would be.
-**Payload**: \<img src=x onerror=alert()>
+When JavaScript dynamically inserts content using innerHTML, the browser handles it differently. According to the W3C and HTML5 standards, if the string being inserted contains a <script> tag, the browser will still parse it and add it to the DOM tree, but it marks it as unexecutable. Hence below payloads would work in our case to trigger XSS.
+```html
+<img src=x onerror=alert()>
+<svg onload=alert(1)>
+<iframe src="javascript:alert(1)"></iframe>
+```
