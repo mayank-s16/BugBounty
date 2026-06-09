@@ -58,3 +58,22 @@ When JavaScript dynamically inserts content using innerHTML, the browser handles
 <svg onload=alert(1)>
 <iframe src="javascript:alert(1)"></iframe>
 ```
+### 5. DOM XSS in jQuery anchor href attribute sink using location.search source
+**Objective:** This lab contains a DOM-based cross-site scripting vulnerability in the submit feedback page. It uses the jQuery library's $ selector function to find an anchor element, and changes its href attribute using data from location.search. To solve this lab, make the "back" link alert document.cookie.
+We do have a back button at the end of the page. Lets view the source code and check for any javscript code.
+```js
+< script >
+	$(function() {
+		$('#backLink').attr("href", (new URLSearchParams(window.location.search)).get('returnPath'));
+	}); <
+/script>
+```
+Okay the back link button is getting set by the parameter returnPath, lets search for returnPath keyword in source code.
+```html
+<a href="/feedback?returnPath=/feedback">Submit feedback</a><p>|</p>
+```
+Oh nice, lets craft the payload now, as we are alreadt aware that with href we can use javascript scheme instead of http/https.
+```
+https://HOSTNAME/feedback?returnPath=javascript:alert(document.cookie)
+```
+Now if you click on the Back button hyperlink in page, XSS alert would pop up.
