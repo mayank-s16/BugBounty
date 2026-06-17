@@ -65,3 +65,9 @@ jwt_forgery.py TOKEN1 TOKEN2
 * You might get multiple public keys. Copy the tampered token one by one and see which one is working. Now copy the content of correspodning .pem file(enter at last). Base64 encode the content.
 * Generate a symettric key in JWT editor extension and change the value of the k param to the base64 string we generated in previous step.
 * Go the the request which contains the normal JWT token. Modify the alg as HS256 from RS256, modify the username in payload, sign the token using the generated symettric key and tries to acess /admin endpoint.
+### 9. CVE-2026-23993: Authentication Bypass via unknown algorithm in HarbourJwt
+**Ref**: https://pentesterlab.com/blog/cve-2026-23993-harbourjwt-unknown-alg-jwt-bypass<br>
+1. Change the alg parameter to any unknown value such as xxxxxxx
+2. Change the username in payload part to any user.
+3. Remove the signature part from token leaving . at start of signature
+
