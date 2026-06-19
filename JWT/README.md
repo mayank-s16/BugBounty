@@ -72,5 +72,8 @@ jwt_forgery.py TOKEN1 TOKEN2
 3. Remove the signature part from token leaving . at start of signature
 
 ### 10[C]. CVE-2022-39227
-**Ref:** https://github.com/user0x1337/CVE-2022-39227
+**Ref:** https://github.com/user0x1337/CVE-2022-39227<br>
+```bash
+python3 cve_2022_39227.py -j <JWT-WEBTOKEN> -i "<KEY>=<VALUE>"
+```
 
