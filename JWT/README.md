@@ -71,3 +71,6 @@ jwt_forgery.py TOKEN1 TOKEN2
 2. Change the username in payload part to any user.
 3. Remove the signature part from token leaving . at start of signature
 
+### 10[C]. CVE-2022-39227
+**Ref:** https://github.com/user0x1337/CVE-2022-39227
+
